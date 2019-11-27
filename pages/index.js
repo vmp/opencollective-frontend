@@ -271,6 +271,9 @@ class HomePage extends React.Component {
                   fontWeight="normal"
                   textAlign="left"
                   mb={4}
+                  onClick={() => {
+                    throw new Error('Test');
+                  }}
                 >
                   <FormattedMessage id="home.tagline1" defaultMessage="A new form of association" />,
                   <br />

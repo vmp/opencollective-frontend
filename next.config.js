@@ -4,7 +4,7 @@ const withCSS = require('@zeit/next-css');
 const withSourceMaps = require('@zeit/next-source-maps');
 
 const nextConfig = {
-  webpack: (config, { webpack }) => {
+  webpack: (config, { webpack, isServer, buildId }) => {
     config.plugins.push(
       // Ignore __tests__
       new webpack.IgnorePlugin(/[\\/]__tests__[\\/]/),
@@ -24,6 +24,16 @@ const nextConfig = {
         NEW_EVENTS: null,
       }),
     );
+
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env.SENTRY_RELEASE': JSON.stringify(buildId),
+      }),
+    );
+
+    if (!isServer) {
+      config.resolve.alias['@sentry/node'] = '@sentry/browser';
+    }
 
     if (process.env.WEBPACK_BUNDLE_ANALYZER) {
       // eslint-disable-next-line node/no-unpublished-require
