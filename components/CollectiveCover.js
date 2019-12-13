@@ -15,7 +15,7 @@ import { prettyUrl, imagePreview } from '../lib/utils';
 import Currency from './Currency';
 import Avatar from './Avatar';
 import Logo from './Logo';
-import { defaultBackgroundImage, CollectiveType } from '../lib/constants/collectives';
+import { defaultBackgroundImage } from '../lib/constants/collectives';
 import Link from './Link';
 import UserCompany from './UserCompany';
 import CollectiveNavbar from './CollectiveNavbar';
@@ -244,9 +244,8 @@ ${description}`;
     const { company, type, website, twitterHandle, githubHandle, stats } = collective;
     const canEdit = LoggedInUser && LoggedInUser.canEditCollective(collective);
     const useNewCollectiveNavbar = !forceLegacy;
-    const isEvent = type === CollectiveType.EVENT;
 
-    if (!isEvent && useNewCollectiveNavbar && collective && collective.slug) {
+    if (useNewCollectiveNavbar && collective && collective.slug) {
       return (
         <Container mb={4}>
           <CollectiveNavbar
