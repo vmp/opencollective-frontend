@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+
+import StyledButton from '../components/StyledButton';
+import AppRejectionReasonModal from '../components/host-dashboard/AppRejectionReasonModal';
 
 const logo = '/static/images/opencollective-icon.svg';
 
+const AcceptReject = styled.div`
+  display: flex;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  width: 200px;
+  background: #009e4a;
+`;
+
+const ApproveCollectiveMutation = gql`
+  mutation approveCollective($id: Int!) {
+    approveCollective(id: $id) {
+      id
+      isActive
+    }
+  }
+`;
 class NotificationBar extends React.Component {
   static propTypes = {
     status: PropTypes.string,
@@ -11,10 +35,29 @@ class NotificationBar extends React.Component {
     description: PropTypes.string,
     error: PropTypes.string,
     actions: PropTypes.arrayOf(PropTypes.node),
+    /** Collective */
+    collective: PropTypes.shape({
+      id: PropTypes.number,
+      slug: PropTypes.string,
+    }),
+    /** Host */
+    host: PropTypes.shape({
+      slug: PropTypes.string,
+    }),
+    LoggedInUser: PropTypes.shape({
+      roles: PropTypes.arrayOf(PropTypes.node),
+    }),
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showRejectionModal: false,
+      collectiveId: null,
+    };
+  }
   render() {
-    const { status, error, title, description, actions } = this.props;
+    const { status, error, title, description, actions, collective, LoggedInUser, host } = this.props;
 
     return (
       <div className={classNames(status, 'NotificationBar')}>
@@ -117,6 +160,43 @@ class NotificationBar extends React.Component {
           <div className={`NotificationLine ${status}`}>
             <h1>{title}</h1>
             <p className="description">{description}</p>
+
+            {LoggedInUser.roles[host.slug] == 'ADMIN' && (
+              <AcceptReject>
+                <Fragment>
+                  <Mutation mutation={ApproveCollectiveMutation}>
+                    {(approveCollective, { loading }) => (
+                      <StyledButton
+                        m={1}
+                        loading={loading}
+                        onClick={() => approveCollective({ variables: { id: collective.id } })}
+                        data-cy={`${collective.slug}-approve-collective`}
+                        buttonStyle="primary"
+                        minWidth={125}
+                      >
+                        <FormattedMessage id="host.pending-applications.approve" defaultMessage="Approve" />
+                      </StyledButton>
+                    )}
+                  </Mutation>
+                  <StyledButton
+                    buttonStyle="danger"
+                    minWidth={125}
+                    m={1}
+                    onClick={() => this.setState({ showRejectionModal: true, collectiveId: collective.id })}
+                  >
+                    <FormattedMessage id="host.pending-applications.reject" defaultMessage="Reject" />
+                  </StyledButton>
+                </Fragment>
+                {this.state.showRejectionModal && (
+                  <AppRejectionReasonModal
+                    show={this.state.showRejectionModal}
+                    onClose={() => this.setState({ showRejectionModal: false })}
+                    collectiveId={this.state.collectiveId}
+                    hostCollectiveSlug={host.slug}
+                  />
+                )}
+              </AcceptReject>
+            )}
             {actions && (
               <div className="actions">
                 {actions.map(action => (
