@@ -58,7 +58,7 @@ class NotificationBar extends React.Component {
   }
   render() {
     const { status, error, title, description, actions, collective, LoggedInUser, host } = this.props;
-
+    console.log(host);
     return (
       <div className={classNames(status, 'NotificationBar')}>
         <style jsx>
@@ -161,7 +161,7 @@ class NotificationBar extends React.Component {
             <h1>{title}</h1>
             <p className="description">{description}</p>
 
-            {LoggedInUser.roles[host.slug] == 'ADMIN' && (
+            {LoggedInUser.hasRole('ADMIN', host) && (
               <AcceptReject>
                 <Fragment>
                   <Mutation mutation={ApproveCollectiveMutation}>
