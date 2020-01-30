@@ -1,12 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
-import { FormattedMessage } from 'react-intl';
-import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import StyledButton from '../components/StyledButton';
 import AppRejectionReasonModal from '../components/host-dashboard/AppRejectionReasonModal';
 import AcceptReject from '../components/host-dashboard/AcceptReject';
 
@@ -21,14 +18,6 @@ const AcceptReject1 = styled.div`
   background: #009e4a;
 `;
 
-const ApproveCollectiveMutation = gql`
-  mutation approveCollective($id: Int!) {
-    approveCollective(id: $id) {
-      id
-      isActive
-    }
-  }
-`;
 class NotificationBar extends React.Component {
   static propTypes = {
     status: PropTypes.string,
