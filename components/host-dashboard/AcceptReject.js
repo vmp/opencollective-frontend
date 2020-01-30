@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -51,6 +52,16 @@ const AcceptReject = ({ collective, host }) => {
       )}
     </Fragment>
   );
+};
+
+AcceptReject.propTypes = {
+  collective: PropTypes.shape({
+    id: PropTypes.number,
+    slug: PropTypes.string,
+  }),
+  host: PropTypes.shape({
+    slug: PropTypes.string,
+  }),
 };
 
 export default AcceptReject;
