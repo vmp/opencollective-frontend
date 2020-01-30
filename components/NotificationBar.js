@@ -8,10 +8,11 @@ import gql from 'graphql-tag';
 
 import StyledButton from '../components/StyledButton';
 import AppRejectionReasonModal from '../components/host-dashboard/AppRejectionReasonModal';
+import AcceptReject from '../components/host-dashboard/AcceptReject';
 
 const logo = '/static/images/opencollective-icon.svg';
 
-const AcceptReject = styled.div`
+const AcceptReject1 = styled.div`
   display: flex;
   font-size: 1em;
   margin: 1em;
@@ -58,7 +59,6 @@ class NotificationBar extends React.Component {
   }
   render() {
     const { status, error, title, description, actions, collective, LoggedInUser, host } = this.props;
-    console.log(host);
     return (
       <div className={classNames(status, 'NotificationBar')}>
         <style jsx>
@@ -162,31 +162,8 @@ class NotificationBar extends React.Component {
             <p className="description">{description}</p>
 
             {LoggedInUser.hasRole('ADMIN', host) && (
-              <AcceptReject>
-                <Fragment>
-                  <Mutation mutation={ApproveCollectiveMutation}>
-                    {(approveCollective, { loading }) => (
-                      <StyledButton
-                        m={1}
-                        loading={loading}
-                        onClick={() => approveCollective({ variables: { id: collective.id } })}
-                        data-cy={`${collective.slug}-approve-collective`}
-                        buttonStyle="primary"
-                        minWidth={125}
-                      >
-                        <FormattedMessage id="host.pending-applications.approve" defaultMessage="Approve" />
-                      </StyledButton>
-                    )}
-                  </Mutation>
-                  <StyledButton
-                    buttonStyle="danger"
-                    minWidth={125}
-                    m={1}
-                    onClick={() => this.setState({ showRejectionModal: true, collectiveId: collective.id })}
-                  >
-                    <FormattedMessage id="host.pending-applications.reject" defaultMessage="Reject" />
-                  </StyledButton>
-                </Fragment>
+              <AcceptReject1>
+                <AcceptReject collective={collective} host={host} />
                 {this.state.showRejectionModal && (
                   <AppRejectionReasonModal
                     show={this.state.showRejectionModal}
@@ -195,7 +172,7 @@ class NotificationBar extends React.Component {
                     hostCollectiveSlug={host.slug}
                   />
                 )}
-              </AcceptReject>
+              </AcceptReject1>
             )}
             {actions && (
               <div className="actions">
