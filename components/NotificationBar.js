@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
-import gql from 'graphql-tag';
 
 import AppRejectionReasonModal from '../components/host-dashboard/AppRejectionReasonModal';
 import AcceptReject from '../components/host-dashboard/AcceptReject';
@@ -36,6 +35,7 @@ class NotificationBar extends React.Component {
     }),
     LoggedInUser: PropTypes.shape({
       roles: PropTypes.arrayOf(PropTypes.node),
+      hasRole: PropTypes.bool.isRequired,
     }),
   };
 
