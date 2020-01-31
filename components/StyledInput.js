@@ -67,6 +67,10 @@ const StyledInput = styled.input`
   &::placeholder {
     color: ${themeGet('colors.black.400')};
   }
+
+  &[type="date"] {
+    font-family: inherit;
+  }
 `;
 
 StyledInput.propTypes = {

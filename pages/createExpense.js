@@ -9,7 +9,7 @@ import { pick } from 'lodash';
 import { compose } from '../lib/utils';
 
 import ExpensesStatsWithData from '../components/expenses/ExpensesStatsWithData';
-import CreateExpenseForm from '../components/expenses/CreateExpenseForm';
+import CreateExpenseForm from '../components/expenses/CreateExpenseFormLegacy';
 
 import ErrorPage from '../components/ErrorPage';
 import Button from '../components/Button';

@@ -41,9 +41,14 @@ module.exports = {
       description: 'FAQs.',
     },
     {
+      name: 'Expenses',
+      components: 'components/expenses/*.js',
+      description: 'Expense flow',
+    },
+    {
       name: 'Collective Page',
       components: 'components/collective-page/*.js',
-      description: 'These components are used on the donate/contribute flow.',
+      description: 'These components are used collective page.',
     },
     {
       name: 'Contribution Flow',
@@ -70,6 +75,9 @@ module.exports = {
     Wrapper: path.join(__dirname, 'styleguide/Wrapper'),
   },
   styles: {
+    Section: {
+      fontSize: '14px',
+    },
     Blockquote: {
       blockquote: {
         borderLeft: '3px solid grey',

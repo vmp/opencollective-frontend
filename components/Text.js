@@ -33,6 +33,8 @@ P.defaultProps = {
 
 export const Span = P.withComponent('span');
 
+export const Label = P.withComponent('label');
+
 Span.defaultProps = {
   ...P.defaultProps,
   fontSize: 'inherit',
@@ -87,5 +89,5 @@ H5.defaultProps = {
   letterSpacing: '-0.4px',
   lineHeight: 'H5',
   fontWeight: 500,
-  color: 'black.800',
+  color: 'black.900',
 };
