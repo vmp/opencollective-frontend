@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { border, color, layout, typography, space, flexbox } from 'styled-system';
+import { border, color, layout, typography, space, flexbox, background } from 'styled-system';
 import themeGet from '@styled-system/theme-get';
 
 import { textTransform } from '../lib/styled_system_custom';
@@ -50,6 +50,7 @@ const StyledButtonContent = styled.button`
 
   ${border}
   ${color}
+  ${background}
   ${flexbox}
   ${space}
   ${layout}

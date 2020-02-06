@@ -144,8 +144,11 @@ initialState = { buttonSize: 'medium' };
 
 ### Advanced customization
 
+Avoid doing that whenever possible, as buttons have different colors based on their type (success,
+primary, danger...etc) and state (hover, active...etc).
+
 ```js
-<StyledButton buttonStyle="primary" bg="green.700">
+<StyledButton buttonStyle="primary" background="#00FF00">
   A green button
 </StyledButton>
 ```
