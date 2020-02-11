@@ -16,13 +16,30 @@ class Map extends React.Component {
     });
   }
 
-  makeBbox(long, lat, zoomValue) {
-    return [long - zoomValue, lat - zoomValue, long + zoomValue, lat + zoomValue];
+  calcLong(long, zoom) {
+    return (long / Math.pow(2, zoom)) * 360 - 180;
+  }
+
+  calcLat(lat, zoom) {
+    const n = Math.PI - (2 * Math.PI * lat) / Math.pow(2, zoom);
+    return (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
+  }
+
+  makeBbox(long, lat, zoom) {
+    const bbox = []; // south, north ,west, east
+
+    bbox[0] = this.calcLat(lat + 1, zoom); // sount
+    bbox[1] = this.calcLat(lat, zoom); // north
+    bbox[2] = this.calcLong(long, zoom); // west
+    bbox[2] = this.calcLong(long + 1, zoom); // east
+
+    return bbox;
   }
 
   render() {
     const { lat, long } = this.props;
-    const bbox = this.makeBbox(long, lat, 0.003);
+    const zoom = 15;
+    const bbox = this.makeBbox(long, lat, zoom);
 
     return (
       <div style={{ width: '100%', height: '100%' }}>
