@@ -92,7 +92,7 @@ const rows = [
   ],
   [
     'Add funds received through other channels',
-    { type: 'check' },
+    '-',
     { type: 'check' },
     { type: 'check' },
     { type: 'check' },

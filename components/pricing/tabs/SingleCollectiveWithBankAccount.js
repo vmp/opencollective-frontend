@@ -37,8 +37,8 @@ const rows = [
     },
   ],
   ['All Collective page features', { type: 'check' }, { type: 'check' }],
-  ['Add founds received through other channels', { type: 'check' }, { type: 'check' }],
-  ['Enable bank transfer payments', { type: 'check' }, { type: 'check' }],
+  ['Add funds received through other channels', '-', { type: 'check' }],
+  ['Enable bank transfer payments', '-', { type: 'check' }],
 ];
 
 const footings = [
