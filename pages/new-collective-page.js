@@ -38,6 +38,10 @@ const GlobalStyles = createGlobalStyle`
   section {
     margin: 0;
   }
+
+  html{
+    scroll-behavior: ${prop => prop.smooth && 'smooth'};
+  }
 `;
 
 /**
@@ -124,8 +128,8 @@ class NewCollectivePage extends React.Component {
 
     const collective = data && data.Collective;
     return (
-      <Page {...this.getPageMetaData(collective)} withoutGlobalStyles>
-        <GlobalStyles />
+      <Page {...this.getPageMetaData(collective)} withoutGlobalStyles >
+        <GlobalStyles smooth={get(data.Collective, 'path') && true} />
         {data.loading ? (
           <Container py={[5, 6]}>
             <Loading />
